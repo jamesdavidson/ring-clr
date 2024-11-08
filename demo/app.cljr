@@ -6,5 +6,11 @@
    :headers {"content-type" "application/json"}
    :body "{\"hello\":\"world\"}"})
 
+;(defn -main []
+;  (server/run-httplistener handler))
+
 (defn -main []
-  (server/run-httplistener handler))
+  (let [listener (new System.Net.HttpListener)]
+    (-> listener .Prefixes (.Add "http://172.31.11.251:8000/"))
+    (server/start listener)
+    (server/serve listener handler)))
